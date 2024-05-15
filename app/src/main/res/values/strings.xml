@@ -7,4 +7,8 @@
     <string name="tv_password">Password</string>
     <string name="robo">dicoding_robo</string>
     <string name="tv_welcome">WELCOME</string>
+    <string name="tv_register_name">Username</string>
+    <string name="password_error_messsage">Password must be at least 8 characters long</string>
+    <string name="email_error_message">invalid email address</string>
+    <string name="username_error_message">username is too short</string>
 </resources>
