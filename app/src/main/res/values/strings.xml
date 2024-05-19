@@ -11,4 +11,7 @@
     <string name="password_error_messsage">Password must be at least 8 characters long</string>
     <string name="email_error_message">invalid email address</string>
     <string name="username_error_message">username is too short</string>
+    <string name="username_error_empty">Username cannot be empty</string>
+    <string name="email_error_empty">Email cannot be empty</string>
+    <string name="password_error_empty">Password cannot be empty</string>
 </resources>
