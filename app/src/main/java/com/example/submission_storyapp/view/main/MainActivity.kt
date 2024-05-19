@@ -15,14 +15,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission_storyapp.R
 import com.example.submission_storyapp.data.Result
-import com.example.submission_storyapp.data.UserRepository
 import com.example.submission_storyapp.data.api.responses.ListStoryItem
-import com.example.submission_storyapp.data.api.responses.StoryResponse
 import com.example.submission_storyapp.databinding.ActivityMainBinding
 import com.example.submission_storyapp.view.ViewModelFactory
 import com.example.submission_storyapp.view.login.LoginActivity
-import com.example.submission_storyapp.view.login.LoginViewModel
-import com.example.submission_storyapp.view.register.RegisterActivity
+import com.example.submission_storyapp.view.add.AddActivity
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -53,10 +50,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.isLogin().observe(this) { user ->
             if (user.isLogin) {
                 setupListStoryItem()
-            }else{
-                intent = Intent(this@MainActivity,LoginActivity::class.java)
+            } else {
+                intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
+                finishAffinity()
             }
+        }
+
+        binding.fabUpload.setOnClickListener {
+            intent = Intent(this@MainActivity, AddActivity::class.java)
+            startActivity(intent)
         }
 
         binding.actionLogout.setOnClickListener {
@@ -67,7 +70,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun logout() {
         lifecycleScope.launch { viewModel.logOut() }
-        startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+        intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setupListStoryItem() {

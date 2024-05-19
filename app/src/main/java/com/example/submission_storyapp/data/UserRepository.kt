@@ -2,6 +2,8 @@ package com.example.submission_storyapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.example.submission_storyapp.data.api.responses.AddStoryErrorResponse
+import com.example.submission_storyapp.data.api.responses.AddStoryResponse
 import com.example.submission_storyapp.data.api.responses.ErrorResponse
 import com.example.submission_storyapp.data.api.responses.LoginErrorResponse
 import com.example.submission_storyapp.data.api.retrofit.ApiService
@@ -15,7 +17,12 @@ import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
+import java.io.File
 
 class UserRepository private constructor(private var apiService: ApiService, private val userPreference: UserPreference) {
     fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> = liveData {
@@ -28,6 +35,8 @@ class UserRepository private constructor(private var apiService: ApiService, pri
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             e.printStackTrace()
             emit(Result.Error(errorBody.message.toString()))
+        }catch (e : Exception){
+            emit(Result.Error(e.message.toString()))
         }
     }
 
@@ -41,6 +50,8 @@ class UserRepository private constructor(private var apiService: ApiService, pri
             val errorBody = Gson().fromJson(jsonInString, LoginErrorResponse::class.java)
             e.printStackTrace()
             emit(Result.Error(errorBody.message.toString()))
+        }catch (e : Exception){
+            emit(Result.Error(e.message.toString()))
         }
     }
 
@@ -55,30 +66,34 @@ class UserRepository private constructor(private var apiService: ApiService, pri
             emit(Result.Success(result))
         }catch (e: HttpException) {
             val response = e.response()?.errorBody()?.string()
-            val error = Gson().fromJson(response, StoryResponse::class.java)
-            emit(Result.Error(error.message.toString()))
+            val errorBody = Gson().fromJson(response, StoryResponse::class.java)
+            emit(Result.Error(errorBody.message.toString()))
         }catch (e : Exception){
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun getDetailStory(userId: String): LiveData<Result<StoryResponse>> = liveData {
+    fun addStory(imageFile: File, description: String) = liveData {
         emit(Result.Loading)
+        val requestImageFile = imageFile.asRequestBody("image/jpg".toMediaType())
+        val requestBody = description.toRequestBody("text/plain".toMediaType())
+        val multipartBody = MultipartBody.Part.createFormData(
+            "photo",
+            imageFile.name,
+            requestImageFile
+        )
         try {
-            val token = runBlocking {
-                userPreference.getUser().first().token
-            }
-            apiService = ApiConfig.getApiService(token)
-            val result = apiService.getDetailStory()
-            emit(Result.Success(result))
-        }catch (e: HttpException) {
+            val successResponse = apiService.uploadStory(multipartBody, requestBody)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
             val response = e.response()?.errorBody()?.string()
-            val error = Gson().fromJson(response, StoryResponse::class.java)
-            emit(Result.Error(error.message.toString()))
+            val errorResponse = Gson().fromJson(response, AddStoryResponse::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
         }catch (e : Exception){
             emit(Result.Error(e.message.toString()))
         }
     }
+
     suspend fun saveUser(user: UserModel) = userPreference.saveUser(user)
 
     suspend fun logout() = userPreference.logOut()

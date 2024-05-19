@@ -70,7 +70,10 @@ class LoginActivity : AppCompatActivity() {
                                 token = token,
                                 isLogin = true
                             ))
-                            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                            val intent = Intent(this@LoginActivity,MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+
                             Log.d("Login", message)
                             showToast(message)
                             showLoading(false)
