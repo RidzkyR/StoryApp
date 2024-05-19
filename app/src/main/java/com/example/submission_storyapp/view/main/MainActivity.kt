@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission_storyapp.R
@@ -22,6 +23,7 @@ import com.example.submission_storyapp.view.ViewModelFactory
 import com.example.submission_storyapp.view.login.LoginActivity
 import com.example.submission_storyapp.view.login.LoginViewModel
 import com.example.submission_storyapp.view.register.RegisterActivity
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -58,10 +60,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.actionLogout.setOnClickListener {
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
+            logout()
         }
 
+    }
+
+    private fun logout() {
+        lifecycleScope.launch { viewModel.logOut() }
+        startActivity(Intent(this@MainActivity,LoginActivity::class.java))
     }
 
     private fun setupListStoryItem() {

@@ -62,7 +62,26 @@ class UserRepository private constructor(private var apiService: ApiService, pri
         }
     }
 
+    fun getDetailStory(userId: String): LiveData<Result<StoryResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val token = runBlocking {
+                userPreference.getUser().first().token
+            }
+            apiService = ApiConfig.getApiService(token)
+            val result = apiService.getDetailStory()
+            emit(Result.Success(result))
+        }catch (e: HttpException) {
+            val response = e.response()?.errorBody()?.string()
+            val error = Gson().fromJson(response, StoryResponse::class.java)
+            emit(Result.Error(error.message.toString()))
+        }catch (e : Exception){
+            emit(Result.Error(e.message.toString()))
+        }
+    }
     suspend fun saveUser(user: UserModel) = userPreference.saveUser(user)
+
+    suspend fun logout() = userPreference.logOut()
 
     fun isLogin(): Flow<UserModel> = userPreference.getUser()
 

@@ -11,6 +11,8 @@ import com.example.submission_storyapp.data.preference.UserModel
 class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun isLogin(): LiveData<UserModel> = userRepository.isLogin().asLiveData()
+
+    suspend fun logOut() = userRepository.logout()
     fun getListStoryItem(): LiveData<Result<StoryResponse>> = userRepository.getStories()
 
 }

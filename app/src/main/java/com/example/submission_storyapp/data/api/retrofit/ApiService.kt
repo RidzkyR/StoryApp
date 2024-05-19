@@ -28,4 +28,7 @@ interface ApiService {
 
     @GET("stories")
     suspend fun getStories(): StoryResponse
+
+    @GET("stories/:id")
+    suspend fun getDetailStory(): StoryResponse
 }
