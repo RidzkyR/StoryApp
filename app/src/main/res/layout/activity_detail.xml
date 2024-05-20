@@ -9,31 +9,24 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_detail_photo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="24dp"
+        android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="10dp"
+        android:layout_height="250dp">
 
         <ImageView
             android:id="@+id/iv_detail_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:transitionName="photo"
+            android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/tv_detail_userId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_detail_photo"
-        tools:text="User ID" />
 
     <TextView
         android:id="@+id/tv_detail_name"
@@ -42,20 +35,22 @@
         android:layout_marginStart="8dp"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:transitionName="username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_userId"
-        tools:text="Username" />
+        app:layout_constraintTop_toBottomOf="@id/card_detail_photo"
+        tools:text="Username"/>
 
     <TextView
-        android:id="@+id/tv_detail_date"
+        android:id="@+id/tv_user_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:transitionName="userId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_detail_name"
-        tools:text="Date" />
+        tools:text="UserId" />
 
     <TextView
         android:id="@+id/tv_description_Header"
@@ -67,16 +62,17 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_detail_date" />
+        app:layout_constraintTop_toBottomOf="@id/tv_user_id" />
 
     <TextView
         android:id="@+id/tv_detail_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:transitionName="description"
         android:layout_marginStart="8dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_description_Header"
-        tools:text="Description Content"/>
+        tools:text="Description Content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

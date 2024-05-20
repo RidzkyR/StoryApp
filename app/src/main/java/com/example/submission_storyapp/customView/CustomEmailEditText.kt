@@ -9,9 +9,7 @@ import android.util.Patterns
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.submission_storyapp.R
 
-class CustomEmailEditText @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : AppCompatEditText(context, attrs) {
+class CustomEmailEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : AppCompatEditText(context, attrs) {
     init {
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -32,7 +30,6 @@ class CustomEmailEditText @JvmOverloads constructor(
         })
     }
 
-    private fun isValid(email: String): Boolean {
-        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
+    //Cek input email
+    private fun isValid(email: String): Boolean = !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

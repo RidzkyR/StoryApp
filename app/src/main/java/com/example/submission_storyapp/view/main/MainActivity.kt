@@ -41,14 +41,23 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // mengatur tampilan recyleView
-        val layoutManager = LinearLayoutManager(this)
-        binding.rvStories.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.rvStories.addItemDecoration(itemDecoration)
+        setupView()
+        getSession()
+        setupAction()
+    }
 
+    private fun setupAction() {
+        with(binding) {
+            actionLogout.setOnClickListener { logout() }
+            fabUpload.setOnClickListener {
+                intent = Intent(this@MainActivity, AddActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
 
-        viewModel.isLogin().observe(this) { user ->
+    private fun getSession() {
+        viewModel.getSession().observe(this) { user ->
             if (user.isLogin) {
                 setupListStoryItem()
             } else {
@@ -57,22 +66,16 @@ class MainActivity : AppCompatActivity() {
                 finishAffinity()
             }
         }
+    }
 
-        binding.fabUpload.setOnClickListener {
-            intent = Intent(this@MainActivity, AddActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.actionLogout.setOnClickListener {
-            logout()
-        }
-
+    private fun setupView() {
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvStories.layoutManager = layoutManager
     }
 
     private fun logout() {
-        lifecycleScope.launch { viewModel.logOut() }
-        intent = Intent(this@MainActivity, LoginActivity::class.java)
-        startActivity(intent)
+        viewModel.logOut()
+        finishAffinity()
     }
 
     private fun setupListStoryItem() {
@@ -83,13 +86,13 @@ class MainActivity : AppCompatActivity() {
 
                     is Result.Success -> {
                         setupAdapter(result.data.listStory)
-                        Log.d("HASIL", result.data.listStory.toString())
+                        Log.d("ListStory", result.data.listStory.toString())
                         showLoading(false)
                     }
 
                     is Result.Error -> {
                         showToast(result.error)
-                        Log.d("HASIL", result.error)
+                        Log.d("ListStory", result.error)
                         showLoading(false)
                     }
                 }

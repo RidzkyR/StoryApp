@@ -23,7 +23,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
-    fun getUser(): Flow<UserModel> {
+    fun getSession(): Flow<UserModel> {
         return dataStore.data.map { preference ->
             UserModel(
                 preference[TOKEN].toString(),

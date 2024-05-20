@@ -1,8 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.SubmissionStoryApp" parent="Theme.Material3.DayNight.NoActionBar">
-         <item name="colorPrimary">@color/dicoding_color</item>
+        <item name="colorPrimary">@color/dicoding_color</item>
     </style>
 
-    <style name="Theme.SubmissionStoryApp" parent="Base.Theme.SubmissionStoryApp" />
+    <style name="Theme.SubmissionStoryApp" parent="Base.Theme.SubmissionStoryApp"/>
+
 </resources>

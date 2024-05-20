@@ -41,9 +41,15 @@ class AddActivity : AppCompatActivity() {
             insets
         }
 
-        binding.buttonGallery.setOnClickListener { startGallery() }
-        binding.buttonCamera.setOnClickListener { startCamera() }
-        binding.buttonAdd.setOnClickListener { addStory() }
+        setupAction()
+    }
+
+    private fun setupAction() {
+        with(binding){
+            buttonGallery.setOnClickListener { startGallery() }
+            buttonCamera.setOnClickListener { startCamera() }
+            buttonAdd.setOnClickListener { addStory() }
+        }
     }
 
     private fun addStory() {

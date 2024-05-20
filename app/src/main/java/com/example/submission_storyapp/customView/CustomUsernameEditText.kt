@@ -7,9 +7,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.submission_storyapp.R
 
-class CustomUsernameEditText @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : AppCompatEditText(context, attrs) {
+class CustomUsernameEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : AppCompatEditText(context, attrs) {
     init {
         addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

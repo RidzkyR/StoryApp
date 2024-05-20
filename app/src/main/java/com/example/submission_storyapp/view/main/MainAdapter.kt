@@ -1,16 +1,18 @@
 package com.example.submission_storyapp.view.main
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.submission_storyapp.data.api.responses.ListStoryItem
-import com.example.submission_storyapp.data.preference.UserModel
 import com.example.submission_storyapp.databinding.ItemStoriesBinding
 import com.example.submission_storyapp.view.detail.DetailActivity
+import androidx.core.util.Pair
 
 class MainAdapter : ListAdapter<ListStoryItem, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
 
@@ -39,12 +41,18 @@ class MainAdapter : ListAdapter<ListStoryItem, MainAdapter.ViewHolder>(DIFF_CALL
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra(DetailActivity.EXTRA_ITEM, listStoryItem)
-                    itemView.context.startActivity(intent)
+                    val optionsCompat: ActivityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            itemView.context as Activity,
+                            Pair(ivItemPhoto, "photo"),
+                            Pair(tvItemName, "username"),
+                            Pair(tvItemDescription, "description"),
+                        )
+                    itemView.context.startActivity(intent, optionsCompat.toBundle())
                 }
             }
         }
     }
-
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {

@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grid_color">#39000000</color>
     <color name="dicoding_color">#2c3d4f</color>
+    <color name="dicoding_secondary_color">#26BCBC</color>
 </resources>

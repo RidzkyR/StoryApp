@@ -58,7 +58,7 @@ class UserRepository private constructor(private var apiService: ApiService, pri
         emit(Result.Loading)
         try {
             val token = runBlocking {
-                userPreference.getUser().first().token
+                userPreference.getSession().first().token
             }
             apiService = ApiConfig.getApiService(token)
             val result = apiService.getStories()
@@ -97,7 +97,7 @@ class UserRepository private constructor(private var apiService: ApiService, pri
 
     suspend fun logout() = userPreference.logOut()
 
-    fun isLogin(): Flow<UserModel> = userPreference.getUser()
+    fun getSession(): Flow<UserModel> = userPreference.getSession()
 
     companion object {
         @Volatile

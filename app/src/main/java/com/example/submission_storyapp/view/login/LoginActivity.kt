@@ -1,14 +1,18 @@
 package com.example.submission_storyapp.view.login
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -39,15 +43,32 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
+        setupView()
+        setupAction()
+
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+    }
+
+    private fun setupAction() {
         with(binding) {
             btnLogin.setOnClickListener { login() }
-
             btnSignup.setOnClickListener {
                 intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-                startActivity(intent)
+                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this@LoginActivity).toBundle())
+                finish()
             }
         }
-
     }
 
     private fun login() {
@@ -74,15 +95,13 @@ class LoginActivity : AppCompatActivity() {
                                 )
                             )
                             AlertDialog.Builder(this@LoginActivity).apply {
-                                setTitle("Yeah!")
-                                setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
-                                setPositiveButton("Lanjut") { _, _ ->
-                                    val intent =
-                                        Intent(this@LoginActivity, MainActivity::class.java)
-                                    intent.flags =
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                setTitle(getString(R.string.alert_title))
+                                setMessage(getString(R.string.alert_message_success))
+                                setPositiveButton(getString(R.string.alert_positive_button)) { _, _ ->
+                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(intent)
-                                    finish()
+                                    finishAffinity()
                                 }.create().show()
                             }
                             Log.d("Login", message)

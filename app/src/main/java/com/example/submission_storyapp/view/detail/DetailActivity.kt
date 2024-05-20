@@ -1,6 +1,5 @@
 package com.example.submission_storyapp.view.detail
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -34,9 +33,8 @@ class DetailActivity : AppCompatActivity() {
             intent.getParcelableExtra(EXTRA_ITEM)
         }
 
-        binding.tvDetailUserId.text = user?.id
+        binding.tvUserId.text = user?.id
         binding.tvDetailName.text = user?.name
-        binding.tvDetailDate.text = user?.createdAt
         binding.tvDetailDescription.text = user?.description
         Glide
             .with(this@DetailActivity)

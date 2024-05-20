@@ -6,7 +6,7 @@
     <string name="tv_email">Email</string>
     <string name="tv_password">Password</string>
     <string name="robo">dicoding_robo</string>
-    <string name="tv_welcome">WELCOME</string>
+    <string name="tv_welcome">WELCOME BACK</string>
     <string name="tv_register_name">Username</string>
     <string name="password_error_messsage">Password must be at least 8 characters long</string>
     <string name="email_error_message">invalid email address</string>
@@ -14,4 +14,11 @@
     <string name="username_error_empty">Username cannot be empty</string>
     <string name="email_error_empty">Email cannot be empty</string>
     <string name="password_error_empty">Password cannot be empty</string>
+    <string name="alert_title">Horayy!</string>
+    <string name="alert_message_success">Login successful</string>
+    <string name="alert_positive_button">Continue</string>
+    <string name="alert_positive_button_register">Continue With Log In</string>
+    <string name="alert_register_success">Register Successful</string>
+    <string name="tv_login_text">Let\'s Log in to your account</string>
+    <string name="tv_register">Create Account</string>
 </resources>

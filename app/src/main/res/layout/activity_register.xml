@@ -15,6 +15,19 @@
         android:background="@drawable/custom_background"
         app:layout_constraintBottom_toTopOf="@id/tv_register_name" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/tv_register"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/iv_robo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/iv_robo"
         android:layout_width="200dp"
@@ -31,10 +44,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ed_register_name_layout"
         android:text="@string/tv_register_name"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/ed_register_name_layout"
+        app:layout_constraintStart_toStartOf="parent"
         tools:alpha="100" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -46,8 +59,8 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/tv_register_email"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:startIconDrawable="@drawable/ic_person"
         tools:alpha="100">
 
@@ -63,12 +76,12 @@
         android:id="@+id/tv_register_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tv_email"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/ed_register_email_layout"
+        app:layout_constraintStart_toStartOf="parent"
         tools:alpha="100" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -79,9 +92,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_login_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_login_password"
         app:startIconDrawable="@drawable/ic_email"
         tools:alpha="100">
 
@@ -102,8 +115,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/tv_password"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/ed_register_password_layout"
+        app:layout_constraintStart_toStartOf="parent"
         tools:alpha="100" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -115,9 +128,9 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         app:endIconMode="password_toggle"
+        app:layout_constraintBottom_toTopOf="@id/btn_register_signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_register_signup"
         app:startIconDrawable="@drawable/ic_password"
         tools:alpha="100">
 
@@ -134,9 +147,9 @@
         android:id="@+id/btn_register_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginVertical="8dp"
         android:text="@string/btn_signup"
         app:layout_constraintBottom_toTopOf="@id/grid"
         app:layout_constraintEnd_toEndOf="parent"
@@ -182,9 +195,9 @@
         style="?attr/materialIconButtonOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginVertical="8dp"
         android:text="@string/btn_login"
         android:textColor="@color/dicoding_color"
         app:layout_constraintBottom_toBottomOf="parent"

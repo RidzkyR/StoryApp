@@ -102,30 +102,42 @@
         app:layout_constraintVertical_bias="0.904" />
 
     <TextView
-        android:id="@+id/tv_fab_text"
+        android:id="@+id/tv_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:alpha="0"
         android:gravity="center"
-
         android:text="Start Your Stories Here"
         android:textColor="#8AFFFFFF"
-        app:layout_constraintBottom_toTopOf="@id/fab_onboarding"
+        app:layout_constraintBottom_toTopOf="@id/button_boarding_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_onboarding"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button_boarding_login"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_margin="8dp"
         android:alpha="0"
-        android:backgroundTint="#26BCBC"
-        android:contentDescription="Go to Login Page"
-        android:src="@drawable/ic_arrow"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/dicoding_secondary_color"
+        android:text="Log In"
+        app:layout_constraintBottom_toTopOf="@id/button_boarding_signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_boarding_signup"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:alpha="0"
+        android:text="Sign Up"
+        android:textColor="@color/dicoding_secondary_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/dicoding_secondary_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

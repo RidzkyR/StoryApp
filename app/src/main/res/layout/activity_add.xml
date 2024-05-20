@@ -20,6 +20,7 @@
             android:id="@+id/action_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="Back"
             android:src="@drawable/ic_email"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

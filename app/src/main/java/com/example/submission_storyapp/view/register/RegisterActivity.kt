@@ -1,13 +1,18 @@
 package com.example.submission_storyapp.view.register
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -36,13 +41,30 @@ class RegisterActivity : AppCompatActivity() {
             insets
         }
 
-        binding.btnRegisterSignup.setOnClickListener {
-            register()
-        }
+        setupView()
+        setupAction()
+    }
 
-        binding.btnRegisterLogin.setOnClickListener {
-            intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+    }
+
+    private fun setupAction() {
+        with(binding) {
+            btnRegisterSignup.setOnClickListener { register()}
+            btnRegisterLogin.setOnClickListener {
+                intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this@RegisterActivity).toBundle())
+                finish()
+            }
         }
     }
 
@@ -61,8 +83,17 @@ class RegisterActivity : AppCompatActivity() {
 
                         is Result.Success -> {
                             val message = result.data.message.toString()
+                            AlertDialog.Builder(this@RegisterActivity).apply {
+                                setTitle(getString(R.string.alert_title))
+                                setMessage(getString(R.string.alert_register_success))
+                                setPositiveButton(getString(R.string.alert_positive_button_register)) { _, _ ->
+                                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(intent)
+                                    finish()
+                                }.create().show()
+                            }
                             Log.d("Register", message)
-                            showToast(message)
                             showLoading(false)
                         }
 
