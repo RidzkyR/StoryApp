@@ -14,7 +14,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "us
 
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
-    suspend fun saveUser(user: UserModel) {
+    suspend fun saveSession(user: UserModel) {
         dataStore.edit { preferences ->
             preferences[TOKEN] = user.token
             preferences[NAME] = user.name
@@ -35,11 +35,8 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     }
 
     suspend fun logOut() {
-        dataStore.edit { preference ->
-            preference[TOKEN] = ""
-            preference[NAME] = ""
-            preference[USER_ID] = ""
-            preference[IS_LOGIN] = false
+        dataStore.edit { preferences ->
+            preferences.clear()
         }
     }
 

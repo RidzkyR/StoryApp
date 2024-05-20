@@ -20,6 +20,7 @@ import com.example.submission_storyapp.databinding.ActivityMainBinding
 import com.example.submission_storyapp.view.ViewModelFactory
 import com.example.submission_storyapp.view.login.LoginActivity
 import com.example.submission_storyapp.view.add.AddActivity
+import com.example.submission_storyapp.view.onboarding.OnboardingActivity
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             if (user.isLogin) {
                 setupListStoryItem()
             } else {
-                intent = Intent(this@MainActivity, LoginActivity::class.java)
+                intent = Intent(this@MainActivity, OnboardingActivity::class.java)
                 startActivity(intent)
                 finishAffinity()
             }

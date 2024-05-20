@@ -2,7 +2,6 @@ package com.example.submission_storyapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.example.submission_storyapp.data.api.responses.AddStoryErrorResponse
 import com.example.submission_storyapp.data.api.responses.AddStoryResponse
 import com.example.submission_storyapp.data.api.responses.ErrorResponse
 import com.example.submission_storyapp.data.api.responses.LoginErrorResponse
@@ -94,7 +93,7 @@ class UserRepository private constructor(private var apiService: ApiService, pri
         }
     }
 
-    suspend fun saveUser(user: UserModel) = userPreference.saveUser(user)
+    suspend fun saveSession(user: UserModel) = userPreference.saveSession(user)
 
     suspend fun logout() = userPreference.logOut()
 
