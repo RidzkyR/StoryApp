@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Submission-StoryApp</string>
+    <string name="app_name">Instading</string>
     <string name="btn_login">Login</string>
     <string name="btn_signup">Sign Up</string>
     <string name="tv_or">or</string>
@@ -21,4 +22,25 @@
     <string name="alert_register_success">Register Successful</string>
     <string name="tv_login_text">Let\'s Log in to your account</string>
     <string name="tv_register">Create Account</string>
+    <string name="button_back">Back</string>
+    <string name="iv_photo_place">photo place</string>
+    <string name="ed_add_description">What\'s on your mind?</string>
+    <string name="button_gallery">Choose from Gallery</string>
+    <string name="button_camera">Choose from Camera</string>
+    <string name="button_upload">Upload</string>
+    <string name="iv_detail_image">image</string>
+    <string name="tv_detail_description">Description</string>
+    <string name="fab_cd_add_story">Add story</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_change_language">Change Language</string>
+    <string name="cloud_with_plane">cloud with plane</string>
+    <string name="cloud">cloud</string>
+    <string name="icon_robo">icon robo</string>
+    <string name="two_cloud">two cloud</string>
+    <string name="paper_plane">paper plane</string>
+    <string name="boarding_text">Start Your Stories Here</string>
+    <string name="button_boarding_login">Log In</string>
+    <string name="button_boarding_signup">Sign Up</string>
+    <string name="photo_description">Photo</string>
+    <string name="icon_profile">icon profile</string>
 </resources>

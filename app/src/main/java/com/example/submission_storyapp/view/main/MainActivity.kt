@@ -10,18 +10,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submission_storyapp.R
 import com.example.submission_storyapp.data.Result
 import com.example.submission_storyapp.data.api.responses.ListStoryItem
 import com.example.submission_storyapp.databinding.ActivityMainBinding
 import com.example.submission_storyapp.view.ViewModelFactory
-import com.example.submission_storyapp.view.login.LoginActivity
 import com.example.submission_storyapp.view.add.AddActivity
 import com.example.submission_storyapp.view.onboarding.OnboardingActivity
-import kotlinx.coroutines.launch
+import android.provider.Settings
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -48,7 +45,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAction() {
         with(binding) {
-            actionLogout.setOnClickListener { logout() }
+            topAppBar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu1 -> {
+                        startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                        true
+                    }
+
+                    R.id.menu2 -> {
+                        logout()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
             fabUpload.setOnClickListener {
                 intent = Intent(this@MainActivity, AddActivity::class.java)
                 startActivity(intent)

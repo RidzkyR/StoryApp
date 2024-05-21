@@ -41,6 +41,7 @@ class AddActivity : AppCompatActivity() {
             insets
         }
 
+        getUser()
         setupAction()
     }
 
@@ -49,6 +50,15 @@ class AddActivity : AppCompatActivity() {
             buttonGallery.setOnClickListener { startGallery() }
             buttonCamera.setOnClickListener { startCamera() }
             buttonAdd.setOnClickListener { addStory() }
+        }
+    }
+
+    private fun getUser() {
+        viewModel.getUser().observe(this) { user ->
+            with(binding){
+                tvUploadUsername.text = user.name
+                tvUploadUserId.text = user.userId
+            }
         }
     }
 

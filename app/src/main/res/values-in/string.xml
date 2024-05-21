@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Instading</string>
+    <string name="btn_login">Masuk</string>
+    <string name="btn_signup">Daftar</string>
+    <string name="tv_or">atau</string>
+    <string name="tv_email">Email</string>
+    <string name="tv_password">Kata Sandi</string>
+    <string name="robo">dicoding_robo</string>
+    <string name="tv_welcome">SELAMAT DATANG KEMBALI</string>
+    <string name="tv_register_name">Nama Pengguna</string>
+    <string name="password_error_messsage">Kata Sandi minimal 8 karakter</string>
+    <string name="email_error_message">Alamat email tidak valid</string>
+    <string name="username_error_message">Nama pengguna terlalu pendek</string>
+    <string name="username_error_empty">Nama pengguna tidak boleh kosong</string>
+    <string name="email_error_empty">Email tidak boleh kosong</string>
+    <string name="password_error_empty">Kata Sandi tidak boleh kosong</string>
+    <string name="alert_title">Horayy!</string>
+    <string name="alert_message_success">Login berhasil</string>
+    <string name="alert_positive_button">Lanjutkan</string>
+    <string name="alert_positive_button_register">Lanjutkan dengan Masuk</string>
+    <string name="alert_register_success">Registrasi Berhasil</string>
+    <string name="tv_login_text">Masuk ke akun Anda</string>
+    <string name="tv_register">Buat Akun</string>
+    <string name="button_back">Kembali</string>
+    <string name="iv_photo_place">tempat foto</string>
+    <string name="ed_add_description">Apa yang Anda pikirkan?</string>
+    <string name="button_gallery">Pilih dari Galeri</string>
+    <string name="button_camera">Pilih dari Kamera</string>
+    <string name="button_upload">Unggah</string>
+    <string name="iv_detail_image">gambar</string>
+    <string name="tv_detail_description">Deskripsi</string>
+    <string name="fab_cd_add_story">Tambah cerita</string>
+    <string name="action_logout">Keluar</string>
+    <string name="action_change_language">Ubah Bahasa</string>
+    <string name="cloud_with_plane">awan dengan pesawat</string>
+    <string name="cloud">awan</string>
+    <string name="icon_robo">ikon robot</string>
+    <string name="two_cloud">dua awan</string>
+    <string name="paper_plane">pesawat kertas</string>
+    <string name="boarding_text">Mulai Cerita Anda Di Sini</string>
+    <string name="button_boarding_login">Masuk</string>
+    <string name="button_boarding_signup">Daftar</string>
+    <string name="photo_description">Foto</string>
+    <string name="icon_profile">ikon profil</string>
+</resources>

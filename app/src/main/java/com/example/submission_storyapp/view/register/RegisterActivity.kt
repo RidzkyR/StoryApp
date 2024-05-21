@@ -12,7 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -62,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
             btnRegisterSignup.setOnClickListener { register()}
             btnRegisterLogin.setOnClickListener {
                 intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this@RegisterActivity).toBundle())
+                startActivity(intent)
                 finish()
             }
         }

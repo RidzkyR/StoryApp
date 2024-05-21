@@ -10,7 +10,6 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.submission_storyapp.R
@@ -54,11 +53,11 @@ class OnboardingActivity : AppCompatActivity() {
         with(binding){
             buttonBoardingLogin.setOnClickListener {
                 val intent = Intent(this@OnboardingActivity, LoginActivity::class.java)
-                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity).toBundle())
+                startActivity(intent)
             }
             buttonBoardingSignup.setOnClickListener {
                 val intent = Intent(this@OnboardingActivity, RegisterActivity::class.java)
-                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity).toBundle())
+                startActivity(intent)
             }
         }
 
