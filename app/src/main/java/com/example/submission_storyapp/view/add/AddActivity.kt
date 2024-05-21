@@ -21,6 +21,7 @@ import com.example.submission_storyapp.utils.reduceFileImage
 import com.example.submission_storyapp.utils.uriToFile
 import com.example.submission_storyapp.view.ViewModelFactory
 import com.example.submission_storyapp.view.main.MainActivity
+import java.io.File
 
 class AddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddBinding
@@ -46,16 +47,24 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        with(binding){
+        with(binding) {
             buttonGallery.setOnClickListener { startGallery() }
             buttonCamera.setOnClickListener { startCamera() }
             buttonAdd.setOnClickListener { addStory() }
+            buttonBack.setOnClickListener { backToMain() }
         }
+    }
+
+    private fun backToMain() {
+        intent = Intent(this@AddActivity, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finishAffinity()
     }
 
     private fun getUser() {
         viewModel.getUser().observe(this) { user ->
-            with(binding){
+            with(binding) {
                 tvUploadUsername.text = user.name
                 tvUploadUserId.text = user.userId
             }
@@ -66,11 +75,11 @@ class AddActivity : AppCompatActivity() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
             val description = binding.edAddDescription.text.toString()
-            Log.d("Image File", "showImage: ${imageFile.path}")
 
+            Log.d("Image File", "showImage: ${imageFile.path}")
             viewModel.addStory(imageFile, description).observe(this) { result ->
-                if (result != null){
-                    when(result){
+                if (result != null) {
+                    when (result) {
                         is Result.Loading -> showLoading(true)
                         is Result.Success -> {
                             val intent = Intent(this, MainActivity::class.java)
@@ -79,6 +88,7 @@ class AddActivity : AppCompatActivity() {
                             showToast(result.data.message)
                             showLoading(false)
                         }
+
                         is Result.Error -> {
                             showToast(result.error)
                             showLoading(false)
@@ -86,7 +96,7 @@ class AddActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
+        } ?: showToast(getString(R.string.error_no_image))
     }
 
     private fun startCamera() {

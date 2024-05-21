@@ -43,4 +43,6 @@
     <string name="button_boarding_signup">Sign Up</string>
     <string name="photo_description">Photo</string>
     <string name="icon_profile">icon profile</string>
+    <string name="ed_error_description">description cannot be empty</string>
+    <string name="error_no_image">image cannot be empty</string>
 </resources>
