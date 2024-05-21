@@ -21,7 +21,6 @@ import com.example.submission_storyapp.utils.reduceFileImage
 import com.example.submission_storyapp.utils.uriToFile
 import com.example.submission_storyapp.view.ViewModelFactory
 import com.example.submission_storyapp.view.main.MainActivity
-import java.io.File
 
 class AddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddBinding
