@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                         startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
                         true
                     }
-
                     R.id.menu2 -> {
                         logout()
                         true
