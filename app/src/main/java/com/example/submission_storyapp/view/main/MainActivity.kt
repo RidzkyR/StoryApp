@@ -19,6 +19,7 @@ import com.example.submission_storyapp.view.ViewModelFactory
 import com.example.submission_storyapp.view.add.AddActivity
 import com.example.submission_storyapp.view.onboarding.OnboardingActivity
 import android.provider.Settings
+import com.example.submission_storyapp.view.map.MapsActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -53,6 +54,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     R.id.menu2 -> {
                         logout()
+                        true
+                    }
+                    R.id.menu3 ->{
+                        startActivity(Intent(this@MainActivity, MapsActivity::class.java))
                         true
                     }
 
