@@ -45,4 +45,7 @@
     <string name="icon_profile">ikon profil</string>
     <string name="ed_error_description">deskripsi tidak boleh kosong</string>
     <string name="error_no_image">gambar tidak boleh kosong</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="action_maps">Maps</string>
+    <string name="retry">Coba lagi</string>
 </resources>
