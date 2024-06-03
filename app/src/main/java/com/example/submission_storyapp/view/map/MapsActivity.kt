@@ -61,9 +61,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     is Result.Success -> {
                         val data = result.data.listStory
-                        data.forEach {datas ->
+                        data.forEach { datas ->
                             val latLng = LatLng(datas.lat, datas.lon)
-                            mMap.addMarker(MarkerOptions().position(latLng).title(datas.name))
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(latLng)
+                                    .title(datas.name)
+                                    .snippet(datas.description)
+                            )
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                             boundsBuilder.include(latLng)
 
