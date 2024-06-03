@@ -13,8 +13,9 @@ import com.example.submission_storyapp.data.api.responses.ListStoryItem
 import com.example.submission_storyapp.databinding.ItemStoriesBinding
 import com.example.submission_storyapp.view.detail.DetailActivity
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 
-class MainAdapter : ListAdapter<ListStoryItem, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
+class MainAdapter : PagingDataAdapter<ListStoryItem, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemStoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,7 +24,7 @@ class MainAdapter : ListAdapter<ListStoryItem, MainAdapter.ViewHolder>(DIFF_CALL
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val result = getItem(position)
-        holder.bind(result)
+        result?.let { holder.bind(it) }
     }
 
     class ViewHolder(private var binding: ItemStoriesBinding) :

@@ -95,31 +95,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListStoryItem() {
-        viewModel.getListStoryItem().observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> showLoading(true)
-
-                    is Result.Success -> {
-                        setupAdapter(result.data.listStory)
-                        Log.d("ListStory", result.data.listStory.toString())
-                        showLoading(false)
-                    }
-
-                    is Result.Error -> {
-                        showToast(result.error)
-                        Log.d("ListStory", result.error)
-                        showLoading(false)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setupAdapter(listStoryItem: List<ListStoryItem>) {
         val adapter = MainAdapter()
-        adapter.submitList(listStoryItem)
         binding.rvStories.adapter = adapter
+        viewModel.getListStoryItem().observe(this) {
+            adapter.submitData(lifecycle, it)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

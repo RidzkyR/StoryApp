@@ -2,8 +2,13 @@ package com.example.submission_storyapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.example.submission_storyapp.data.api.responses.AddStoryResponse
 import com.example.submission_storyapp.data.api.responses.ErrorResponse
+import com.example.submission_storyapp.data.api.responses.ListStoryItem
 import com.example.submission_storyapp.data.api.responses.LoginErrorResponse
 import com.example.submission_storyapp.data.api.retrofit.ApiService
 import com.example.submission_storyapp.data.api.responses.LoginResponse
@@ -23,8 +28,15 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.File
 
-class UserRepository private constructor(private var apiService: ApiService, private val userPreference: UserPreference) {
-    fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> = liveData {
+class UserRepository private constructor(
+    private var apiService: ApiService,
+    private val userPreference: UserPreference
+) {
+    fun register(
+        name: String,
+        email: String,
+        password: String
+    ): LiveData<Result<RegisterResponse>> = liveData {
         emit(Result.Loading)
         try {
             val result = apiService.register(name, email, password)
@@ -34,7 +46,7 @@ class UserRepository private constructor(private var apiService: ApiService, pri
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             e.printStackTrace()
             emit(Result.Error(errorBody.message.toString()))
-        }catch (e : Exception){
+        } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -49,27 +61,20 @@ class UserRepository private constructor(private var apiService: ApiService, pri
             val errorBody = Gson().fromJson(jsonInString, LoginErrorResponse::class.java)
             e.printStackTrace()
             emit(Result.Error(errorBody.message.toString()))
-        }catch (e : Exception){
+        } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun getStories(): LiveData<Result<StoryResponse>> = liveData {
-        emit(Result.Loading)
-        try {
-            val token = runBlocking {
-                userPreference.getSession().first().token
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(apiService)
             }
-            apiService = ApiConfig.getApiService(token)
-            val result = apiService.getStories()
-            emit(Result.Success(result))
-        }catch (e: HttpException) {
-            val response = e.response()?.errorBody()?.string()
-            val errorBody = Gson().fromJson(response, StoryResponse::class.java)
-            emit(Result.Error(errorBody.message.toString()))
-        }catch (e : Exception){
-            emit(Result.Error(e.message.toString()))
-        }
+        ).liveData
     }
 
     fun addStory(imageFile: File, description: String) = liveData {
@@ -88,7 +93,7 @@ class UserRepository private constructor(private var apiService: ApiService, pri
             val response = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(response, AddStoryResponse::class.java)
             emit(Result.Error(errorResponse.message.toString()))
-        }catch (e : Exception){
+        } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -102,11 +107,11 @@ class UserRepository private constructor(private var apiService: ApiService, pri
             apiService = ApiConfig.getApiService(token)
             val result = apiService.getStoriesWithLocation()
             emit(Result.Success(result))
-        }catch (e: HttpException) {
+        } catch (e: HttpException) {
             val response = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(response, StoryResponse::class.java)
             emit(Result.Error(errorBody.message.toString()))
-        }catch (e : Exception){
+        } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
