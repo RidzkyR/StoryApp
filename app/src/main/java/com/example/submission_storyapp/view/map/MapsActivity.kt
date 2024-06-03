@@ -1,5 +1,6 @@
 package com.example.submission_storyapp.view.map
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.example.submission_storyapp.databinding.ActivityMapsBinding
 import com.example.submission_storyapp.view.ViewModelFactory
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -51,6 +53,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isMapToolbarEnabled = true
 
         showMarkers()
+        setMapStyle()
+    }
+
+    private fun setMapStyle() {
+        try {
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.maps_style))
+            if (!success) {
+                Log.e("Map Style", "Style parsing failed.")
+            }
+        } catch (exception: Resources.NotFoundException) {
+            Log.e("Map Style", "Can't find style. Error: ", exception)
+        }
     }
 
     private fun showMarkers() {
