@@ -93,6 +93,24 @@ class UserRepository private constructor(private var apiService: ApiService, pri
         }
     }
 
+    fun getStoriesWithLocation(): LiveData<Result<StoryResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val token = runBlocking {
+                userPreference.getSession().first().token
+            }
+            apiService = ApiConfig.getApiService(token)
+            val result = apiService.getStoriesWithLocation()
+            emit(Result.Success(result))
+        }catch (e: HttpException) {
+            val response = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(response, StoryResponse::class.java)
+            emit(Result.Error(errorBody.message.toString()))
+        }catch (e : Exception){
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     suspend fun saveSession(user: UserModel) = userPreference.saveSession(user)
 
     suspend fun logout() = userPreference.logOut()
