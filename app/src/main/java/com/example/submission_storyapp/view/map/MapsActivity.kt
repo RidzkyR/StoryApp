@@ -12,7 +12,6 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.submission_storyapp.R
 import com.example.submission_storyapp.data.Result
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -33,7 +32,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private val boundsBuilder = LatLngBounds.Builder()
-    private val viewModel: MapsViewModel by viewModels() {
+    private val viewModel: MapsViewModel by viewModels{
         ViewModelFactory.getInstance(this)
     }
 
@@ -43,7 +42,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //  SupportMapFragment dan pemberitahuan saat peta siap digunakan.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -98,14 +96,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     is Result.Loading -> showLoading(true)
 
                     is Result.Success -> {
-                        val data = result.data.listStory
-                        data.forEach { datas ->
-                            val latLng = LatLng(datas.lat, datas.lon)
+                        val listStory = result.data.listStory
+                        listStory.forEach { data ->
+                            val latLng = LatLng(data.lat, data.lon)
                             mMap.addMarker(
                                 MarkerOptions()
                                     .position(latLng)
-                                    .title(datas.name)
-                                    .snippet(datas.description)
+                                    .title(data.name)
+                                    .snippet(data.description)
                             )
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                             boundsBuilder.include(latLng)

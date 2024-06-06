@@ -7,7 +7,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.liveData
 import com.example.submission_storyapp.data.api.responses.AddStoryResponse
 import com.example.submission_storyapp.data.api.responses.ErrorResponse
 import com.example.submission_storyapp.data.api.responses.ListStoryItem
@@ -85,8 +84,8 @@ class UserRepository private constructor(
                 remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
                 pagingSourceFactory = { storyDatabase.storyDao().getAllStories()}
             )
-            val couroutineFlow = result.flow.cachedIn(coroutineScope)
-            couroutineFlow.collect { pagingData ->
+            val coroutineFlow = result.flow.cachedIn(coroutineScope)
+            coroutineFlow.collect { pagingData ->
                 emit(Result.Success(pagingData))
             }
         } catch (e: HttpException) {
