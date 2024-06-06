@@ -9,5 +9,5 @@ import java.io.File
 
 class AddViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun getUser(): LiveData<UserModel> = userRepository.getSession().asLiveData()
-    fun addStory(file: File, description: String) = userRepository.addStory(file, description)
+    fun addStory(file: File, description: String, lat: Float? = null, lon: Float? = null) = userRepository.addStory(file, description, lat, lon)
 }

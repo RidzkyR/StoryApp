@@ -98,7 +98,7 @@ class UserRepository private constructor(
         }
     }
 
-    fun addStory(imageFile: File, description: String) = liveData {
+    fun addStory(imageFile: File, description: String, lat: Float? = null , lon: Float? = null) = liveData {
         emit(Result.Loading)
         val requestImageFile = imageFile.asRequestBody("image/jpg".toMediaType())
         val requestBody = description.toRequestBody("text/plain".toMediaType())
@@ -108,7 +108,7 @@ class UserRepository private constructor(
             requestImageFile
         )
         try {
-            val successResponse = apiService.uploadStory(multipartBody, requestBody)
+            val successResponse = apiService.uploadStory(multipartBody, requestBody, lat, lon)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val response = e.response()?.errorBody()?.string()

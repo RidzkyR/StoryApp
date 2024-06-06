@@ -97,7 +97,7 @@ class StoryPagingSource : PagingSource<Int, LiveData<Result<List<ListStoryItem>>
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, LiveData<Result<List<ListStoryItem>>>>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, LiveData<Result<List<ListStoryItem>>>>): Int {
         return 0
     }
 
