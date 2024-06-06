@@ -101,8 +101,25 @@ class MainActivity : AppCompatActivity() {
                 adapter.retry()
             }
         )
-        viewModel.getListStoryItem().observe(this) {
-            adapter.submitData(lifecycle, it)
+
+        viewModel.getListStoryItem().observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> showLoading(true)
+
+                    is Result.Success -> {
+                        adapter.submitData(lifecycle, result.data)
+                        Log.d("ListStory", result.data.toString())
+                        showLoading(false)
+                    }
+
+                    is Result.Error -> {
+                        showToast(result.error)
+                        Log.d("ListStory", result.error)
+                        showLoading(false)
+                    }
+                }
+            }
         }
     }
 

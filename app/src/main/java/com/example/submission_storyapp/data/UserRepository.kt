@@ -2,9 +2,11 @@ package com.example.submission_storyapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.liveData
 import com.example.submission_storyapp.data.api.responses.AddStoryResponse
 import com.example.submission_storyapp.data.api.responses.ErrorResponse
@@ -15,9 +17,12 @@ import com.example.submission_storyapp.data.api.responses.LoginResponse
 import com.example.submission_storyapp.data.api.responses.RegisterResponse
 import com.example.submission_storyapp.data.api.responses.StoryResponse
 import com.example.submission_storyapp.data.api.retrofit.ApiConfig
+import com.example.submission_storyapp.data.database.StoryDatabase
+import com.example.submission_storyapp.data.database.StoryRemoteMediator
 import com.example.submission_storyapp.data.preference.UserModel
 import com.example.submission_storyapp.data.preference.UserPreference
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -30,7 +35,8 @@ import java.io.File
 
 class UserRepository private constructor(
     private var apiService: ApiService,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val storyDatabase: StoryDatabase
 ) {
     fun register(
         name: String,
@@ -66,11 +72,30 @@ class UserRepository private constructor(
         }
     }
 
-    fun getStories(): LiveData<PagingData<ListStoryItem>> {
-        return Pager(
-            config = PagingConfig(pageSize = 5),
-            pagingSourceFactory = { StoryPagingSource(apiService) }
-        ).liveData
+    fun getStories(coroutineScope: CoroutineScope): LiveData<Result<PagingData<ListStoryItem>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val token = runBlocking {
+                userPreference.getSession().first().token
+            }
+            apiService = ApiConfig.getApiService(token)
+            @OptIn(ExperimentalPagingApi::class)
+            val result = Pager(
+                config = PagingConfig(pageSize = 5),
+                remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
+                pagingSourceFactory = { storyDatabase.storyDao().getAllStories()}
+            )
+            val couroutineFlow = result.flow.cachedIn(coroutineScope)
+            couroutineFlow.collect { pagingData ->
+                emit(Result.Success(pagingData))
+            }
+        } catch (e: HttpException) {
+            val response = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(response, StoryResponse::class.java)
+            emit(Result.Error(errorBody.message.toString()))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
     fun addStory(imageFile: File, description: String) = liveData {
@@ -121,9 +146,13 @@ class UserRepository private constructor(
     companion object {
         @Volatile
         private var instance: UserRepository? = null
-        fun getInstance(apiService: ApiService, userPreference: UserPreference): UserRepository =
+        fun getInstance(
+            apiService: ApiService,
+            userPreference: UserPreference,
+            storyDatabase: StoryDatabase
+        ): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(apiService, userPreference)
+                instance ?: UserRepository(apiService, userPreference, storyDatabase)
             }.also { instance = it }
     }
 }

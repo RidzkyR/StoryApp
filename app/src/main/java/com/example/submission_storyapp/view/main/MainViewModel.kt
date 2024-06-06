@@ -16,6 +16,6 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun getSession(): LiveData<UserModel> = userRepository.getSession().asLiveData()
-    fun getListStoryItem(): LiveData<PagingData<ListStoryItem>> = userRepository.getStories().cachedIn(viewModelScope)
+    fun getListStoryItem(): LiveData<Result<PagingData<ListStoryItem>>> = userRepository.getStories(viewModelScope)
     fun logOut() = viewModelScope.launch{userRepository.logout()}
 }
